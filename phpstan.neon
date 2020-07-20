@@ -3,12 +3,8 @@ parameters:
 	paths:
 		- src
 		- tests
-	excludes_analyse:
-		- src/array_utils/CartesianProduct
-		- tests/parser/file/php/fixtures
 
 	ignoreErrors:
-
 	    -
 	        message: '#Call to an undefined method Mockery.*#'
 	        path: tests/*
@@ -19,5 +15,3 @@ parameters:
 	        message: '#PHPUnit\\Framework\\MockObject\\MockObject given\.$#'
 	        path: tests/*
 
-includes:
-    - phpstan_configs\CartesianProduct.neon
