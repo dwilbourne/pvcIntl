@@ -17,9 +17,8 @@ namespace pvc\intl;
 
 class Time
 {
-
-    public const MIN_TIME = 0;
-    public const MAX_TIME = 86399;
+    protected const MIN_TIME = 0;
+    protected const MAX_TIME = 86399;
 
     /**
      * store the time as a number of seconds which ranges between 0 and +86,399.
@@ -38,6 +37,24 @@ class Time
     {
         $this->time = $seconds;
         $this->wrapTime();
+    }
+
+    /**
+     * getMinTime
+     * @return Time
+     */
+    public function getMinTime() : Time
+    {
+        return new Time(self::MIN_TIME);
+    }
+
+    /**
+     * getMaxTime
+     * @return Time
+     */
+    public function getMaxTime() : Time
+    {
+        return new Time(self::MAX_TIME);
     }
 
     /**

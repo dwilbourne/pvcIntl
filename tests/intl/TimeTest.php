@@ -12,12 +12,21 @@ use pvc\intl\Time;
 
 class TimeTest extends TestCase
 {
-
     protected Time $pt;
 
     public function setUp(): void
     {
         $this->pt = new time();
+    }
+
+    public function testGetMinTime() : void
+    {
+        self::assertInstanceOf(Time::class, $this->pt->getMinTime());
+    }
+
+    public function testGetMaxTime() : void
+    {
+        self::assertInstanceOf(Time::class, $this->pt->getMaxTime());
     }
 
     /**
