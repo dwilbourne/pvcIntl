@@ -11,7 +11,8 @@ use pvc\intl\err\UtcOffsetException;
 use pvc\intl\err\UtcOffsetMsg;
 
 /**
- * UtcOffset checks to make sure that the offset specified is valid.
+ * UtcOffset.  Immutable object that cannot be set to a nonsensical value, e.g. checks to make sure that the
+ * offset specified is valid.
  *
  * Offset can be specified in hours or seconds
  *
