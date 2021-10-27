@@ -1,9 +1,13 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace pvc\intl;
 
-use pvc\msg\UserMsg;
+use pvc\intl\err\InvalidISOLanguageCodeMsg;
+use pvc\msg\ErrorExceptionMsg;
 use pvc\msg\UserMsgInterface;
+use pvc\validator\base\ValidatorInterface;
 
 /**
  * Class IsoLanguageCodes
@@ -13,9 +17,9 @@ use pvc\msg\UserMsgInterface;
  * to declare an interface.
  *
  */
-class IsoLanguageCodes
+class IsoLanguageCodes implements ValidatorInterface
 {
-    protected ?UserMsgInterface $errmsg;
+    protected ?ErrorExceptionMsg $errmsg;
 
     protected static array $languageCodes = [
         'ab' => 'Abkhazian',
@@ -208,7 +212,7 @@ class IsoLanguageCodes
      * @function getLanguageCodes
      * @return string[]
      */
-    public static function getLanguageCodes() : array
+    public function getLanguageCodes(): array
     {
         return self::$languageCodes;
     }
@@ -218,9 +222,14 @@ class IsoLanguageCodes
      * @param string $code
      * @return bool
      */
-    public static function validateLanguageCode(string $code) : bool
+    public function validateLanguageCode(string $code): bool
     {
-        return array_key_exists($code, self::$languageCodes);
+        unset($this->errmsg);
+        $result = array_key_exists($code, $this->getLanguageCodes());
+        if (!$result) {
+            $this->setErrMsg(new InvalidISOLanguageCodeMsg($code));
+        }
+        return $result;
     }
 
     /**
@@ -228,7 +237,7 @@ class IsoLanguageCodes
      * @param string $language
      * @return false|string
      */
-    public static function getLanguageCodeFromLanguage(string $language)
+    public function getLanguageCodeFromLanguage(string $language)
     {
         /** @phpstan-ignore-next-line */
         return array_search($language, self::$languageCodes);
@@ -241,22 +250,15 @@ class IsoLanguageCodes
      */
     public function validate($data): bool
     {
-        $this->errmsg = null;
-        $result = self::validateLanguageCode($data);
-        if (!$result) {
-            $msg = new UserMsg([$data], '%s is not a valid iso language code.');
-            $this->setErrMsg($msg);
-            return false;
-        }
-        return true;
+        return $this->validateLanguageCode((string) $data);
     }
 
-    protected function setErrMsg(UserMsgInterface $msg) : void
+    protected function setErrMsg(ErrorExceptionMsg $msg): void
     {
         $this->errmsg = $msg;
     }
 
-    public function getErrMsg(): ?UserMsgInterface
+    public function getErrMsg(): ?ErrorExceptionMsg
     {
         return $this->errmsg ?? null;
     }

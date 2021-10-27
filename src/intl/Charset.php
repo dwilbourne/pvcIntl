@@ -410,13 +410,13 @@ class Charset implements ValidatorInterface
      */
     public function validateCharset(string $charset): bool
     {
+        unset($this->errmsg);
         $key = array_search(strtolower($charset), array_map('strtolower', $this->validCharsets));
         if ($key === false) {
             $this->errmsg = new InvalidCharsetMsg($charset);
             return false;
         } else {
             $this->charset = (int) $key;
-            unset($this->errmsg);
             return true;
         }
     }

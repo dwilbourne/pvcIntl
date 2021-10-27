@@ -9,33 +9,34 @@ namespace tests\intl;
 
 use PHPUnit\Framework\TestCase;
 use pvc\intl\IsoLanguageCodes;
+use pvc\msg\ErrorExceptionMsg;
 use pvc\msg\UserMsg;
 
-class LanguageCodesTest extends TestCase
+class ISOLanguageCodesTest extends TestCase
 {
     protected IsoLanguageCodes $codes;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         $this->codes = new IsoLanguageCodes();
     }
 
-    public function testValidateCode() : void
+    public function testValidateCode(): void
     {
-        self::assertTrue(IsoLanguageCodes::validateLanguageCode('en'));
+        self::assertTrue($this->codes->validateLanguageCode('en'));
     }
 
-    public function testGetLanguageCodes() : void
+    public function testGetLanguageCodes(): void
     {
-        self::assertTrue(0 < count(IsoLanguageCodes::getLanguageCodes()));
+        self::assertTrue(0 < count($this->codes->getLanguageCodes()));
     }
 
-    public function testGetLanguageCodeFromLanguage() : void
+    public function testGetLanguageCodeFromLanguage(): void
     {
-        self::assertEquals('en', IsoLanguageCodes::getLanguageCodeFromLanguage('English'));
+        self::assertEquals('en', $this->codes->getLanguageCodeFromLanguage('English'));
     }
 
-    public function testValidate() : void
+    public function testValidate(): void
     {
         self::assertNull($this->codes->getErrMsg());
 
@@ -45,9 +46,9 @@ class LanguageCodesTest extends TestCase
 
         $input = 'foo';
         self::assertFalse($this->codes->validate($input));
-        self::assertInstanceOf(UserMsg::class, $this->codes->getErrMsg());
+        self::assertInstanceOf(ErrorExceptionMsg::class, $this->codes->getErrMsg());
 
-        // now test a valiod input again and make sure error message is null
+        // now test a valid input again and make sure error message is null
         $input = 'en';
         self::assertTrue($this->codes->validate($input));
         self::assertNull($this->codes->getErrMsg());

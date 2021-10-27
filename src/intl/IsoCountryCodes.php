@@ -283,14 +283,10 @@ class IsoCountryCodes implements ValidatorInterface
      */
     public function validateCountryCode(string $code) : bool
     {
+        unset($this->errmsg);
         $result = array_key_exists($code, self::$countryCodes);
-        if (!$result) {
-            $this->errmsg = new InvalidISOCountryCodeMsg($code);
-            return false;
-        } else {
-            unset($this->errmsg);
-            return true;
-        }
+        if (!$result) $this->errmsg = new InvalidISOCountryCodeMsg($code);
+        return $result;
     }
 
     /**
