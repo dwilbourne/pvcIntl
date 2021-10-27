@@ -5,11 +5,12 @@
  * @version: 1.0
  */
 
-namespace tests\charset;
+namespace tests\intl;
 
 use pvc\intl\Charset;
 use PHPUnit\Framework\TestCase;
 use pvc\intl\err\InvalidCharsetException;
+use pvc\intl\err\InvalidCharsetMsg;
 
 class CharsetTest extends TestCase
 {
@@ -35,11 +36,13 @@ class CharsetTest extends TestCase
         self::assertEquals('UTF-8', $cs->getCharsetString());
     }
 
-    public function testCharsetParseString() : void
+    public function testValidateCharset() : void
     {
         $cs = new Charset();
-        self::assertFalse($cs->parseCharsetString('foo'));
-        self::assertTrue($cs->parseCharsetString('utf-8'));
+        self::assertFalse($cs->validateCharset('foo'));
+        self::assertTrue($cs->getErrMsg() instanceof InvalidCharsetMsg);
+        self::assertTrue($cs->validateCharset('utf-8'));
+        self::assertNull($cs->getErrMsg());
         self::assertEquals(Charset::UTF_8, $cs->getCharsetConstant());
     }
 }

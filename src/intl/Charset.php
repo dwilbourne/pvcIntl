@@ -3,13 +3,17 @@
 namespace pvc\intl;
 
 use pvc\intl\err\InvalidCharsetException;
+use pvc\intl\err\InvalidCharsetMsg;
+use pvc\msg\ErrorExceptionMsg;
+use pvc\msg\MsgRetrievalInterface;
+use pvc\validator\base\ValidatorInterface;
 
 /**
  * Charset tries to provide canonicalization of a wide range of IANA registered charsets.
  *
  * Class Charset
  */
-class Charset
+class Charset implements ValidatorInterface
 {
 
     // default charset is utf-8
@@ -337,6 +341,8 @@ class Charset
      */
     protected int $charset;
 
+    protected ErrorExceptionMsg $errmsg;
+
     /**
      * Charset constructor.
      * @param int $charset
@@ -398,18 +404,30 @@ class Charset
     }
 
     /**
-     * @function parseCharsetString
+     * @function validateCharset
      * @param string $charset
      * @return bool
      */
-    public function parseCharsetString(string $charset): bool
+    public function validateCharset(string $charset): bool
     {
         $key = array_search(strtolower($charset), array_map('strtolower', $this->validCharsets));
         if ($key === false) {
+            $this->errmsg = new InvalidCharsetMsg($charset);
             return false;
         } else {
             $this->charset = (int) $key;
+            unset($this->errmsg);
             return true;
         }
+    }
+
+    public function validate($data): bool
+    {
+        return $this->validateCharset((string) $data);
+    }
+
+    public function getErrMsg(): ?MsgRetrievalInterface
+    {
+        return $this->errmsg ?? null;
     }
 }

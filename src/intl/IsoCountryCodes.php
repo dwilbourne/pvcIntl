@@ -7,10 +7,15 @@
 
 namespace pvc\intl;
 
+use pvc\intl\err\InvalidISOCountryCodeMsg;
+use pvc\msg\ErrorExceptionMsg;
+use pvc\msg\MsgRetrievalInterface;
+use pvc\validator\base\ValidatorInterface;
+
 /**
  * Class IsoCountryCodes
  */
-class IsoCountryCodes
+class IsoCountryCodes implements ValidatorInterface
 {
     protected static array $countryCodes = [
         'AF' => 'Afghanistan',
@@ -260,11 +265,13 @@ class IsoCountryCodes
         'ZW' => 'Zimbabwe',
     ];
 
+    protected ErrorExceptionMsg $errmsg;
+
     /**
      * @function getCountryCodes
      * @return string[]
      */
-    public static function getCountryCodes() : array
+    public function getCountryCodes() : array
     {
         return self::$countryCodes;
     }
@@ -274,9 +281,16 @@ class IsoCountryCodes
      * @param string $code
      * @return bool
      */
-    public static function validateCountryCode(string $code)
+    public function validateCountryCode(string $code) : bool
     {
-        return array_key_exists($code, self::$countryCodes);
+        $result = array_key_exists($code, self::$countryCodes);
+        if (!$result) {
+            $this->errmsg = new InvalidISOCountryCodeMsg($code);
+            return false;
+        } else {
+            unset($this->errmsg);
+            return true;
+        }
     }
 
     /**
@@ -284,9 +298,19 @@ class IsoCountryCodes
      * @param string $country
      * @return false|string
      */
-    public static function getCountryCodeFromCountry(string $country)
+    public function getCountryCodeFromCountry(string $country)
     {
         /** @phpstan-ignore-next-line */
         return array_search($country, self::$countryCodes);
+    }
+
+    public function validate($data): bool
+    {
+        return $this->validateCountryCode((string) $data);
+    }
+
+    public function getErrMsg(): ?MsgRetrievalInterface
+    {
+        return $this->errmsg ?? null;
     }
 }
