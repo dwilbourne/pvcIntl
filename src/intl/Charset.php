@@ -6,7 +6,7 @@ use pvc\intl\err\InvalidCharsetException;
 use pvc\intl\err\InvalidCharsetMsg;
 use pvc\msg\ErrorExceptionMsg;
 use pvc\msg\MsgRetrievalInterface;
-use pvc\validator\base\ValidatorInterface;
+use pvc\validator\ValidatorInterface;
 
 /**
  * Charset tries to provide canonicalization of a wide range of IANA registered charsets.

@@ -10,7 +10,7 @@ namespace pvc\intl;
 use pvc\intl\err\InvalidISOCountryCodeMsg;
 use pvc\msg\ErrorExceptionMsg;
 use pvc\msg\MsgRetrievalInterface;
-use pvc\validator\base\ValidatorInterface;
+use pvc\validator\ValidatorInterface;
 
 /**
  * Class IsoCountryCodes

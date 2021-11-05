@@ -7,7 +7,7 @@ namespace pvc\intl;
 use pvc\intl\err\InvalidISOLanguageCodeMsg;
 use pvc\msg\ErrorExceptionMsg;
 use pvc\msg\UserMsgInterface;
-use pvc\validator\base\ValidatorInterface;
+use pvc\validator\ValidatorInterface;
 
 /**
  * Class IsoLanguageCodes
