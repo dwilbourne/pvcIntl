@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace pvc\intl;
 
+use pvc\interfaces\intl\LocaleInterface;
 use pvc\intl\err\InvalidLocaleException;
 use Symfony\Component\Intl\Locales;
 
@@ -16,7 +17,7 @@ use Symfony\Component\Intl\Locales;
  * The format uses underscores, not hyphens (e.g. fr_FR, not fr-FR).  The language code cannot be capitalized, the
  * country code (second part of the string) must be capitalized.
  */
-class Locale
+class Locale implements LocaleInterface
 {
     /**
      * @var string

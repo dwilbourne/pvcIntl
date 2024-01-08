@@ -8,12 +8,13 @@ declare(strict_types=1);
 
 namespace pvc\intl;
 
+use pvc\interfaces\intl\CountryCodesInterface;
 use Symfony\Component\Intl\Countries;
 
 /**
  * Class CountryCodes
  */
-class CountryCodes
+class CountryCodes implements CountryCodesInterface
 {
     /**
      * countryCodeIsValid

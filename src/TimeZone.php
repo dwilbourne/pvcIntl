@@ -8,13 +8,14 @@ declare(strict_types=1);
 
 namespace pvc\intl;
 
+use pvc\interfaces\intl\TimeZoneInterface;
 use pvc\intl\err\InvalidTimezoneException;
 use Symfony\Component\Intl\Timezones;
 
 /**
  * Class TimeZone
  */
-class TimeZone
+class TimeZone implements TimeZoneInterface
 {
     /**
      * exists

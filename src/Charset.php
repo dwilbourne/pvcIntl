@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace pvc\intl;
 
-class Charset
+use pvc\interfaces\intl\CharsetInterface;
+
+class Charset implements CharsetInterface
 {
     /**
      * getPhpCharsets
