@@ -22,6 +22,9 @@ class _IntlXData extends XDataAbstract
         return [
             InvalidLocaleException::class => 1000,
             InvalidTimezoneException::class => 1001,
+            InvalidCountryCodeException::class => 1002,
+            InvalidLanguageCodeException::class => 1003,
+            InvalidCharsetException::class => 1004,
         ];
     }
 
@@ -30,6 +33,9 @@ class _IntlXData extends XDataAbstract
         return [
             InvalidLocaleException::class => 'Invalid locale string: ${locale}',
             InvalidTimezoneException::class => 'Invalid timezone: ${badTimezone}',
+            InvalidCountryCodeException::class => 'Invalid country code: ${badCountryCode}',
+            InvalidLanguageCodeException::class => 'Invalid language code: ${badLanguageCode}',
+            InvalidCharsetException::class => 'Invalid charset: ${badCharset}',
         ];
     }
 }

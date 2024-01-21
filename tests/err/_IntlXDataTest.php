@@ -6,7 +6,7 @@
 
 declare (strict_types=1);
 
-namespace err;
+namespace pvcTests\intl\err;
 
 use pvc\err\XDataTestMaster;
 use pvc\intl\err\_IntlXData;
@@ -22,6 +22,9 @@ class _IntlXDataTest extends XDataTestMaster
      * @covers \pvc\intl\err\_IntlXData::getLocalXCodes
      * @covers \pvc\intl\err\InvalidLocaleException::__construct
      * @covers \pvc\intl\err\InvalidTimezoneException::__construct
+     * @covers \pvc\intl\err\InvalidCharsetException::__construct
+     * @covers \pvc\intl\err\InvalidCountryCodeException::__construct
+     * @covers \pvc\intl\err\InvalidLanguageCodeException::__construct
      */
     public function testPvcIntlExceptionLibrary(): void
     {
