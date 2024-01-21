@@ -32,12 +32,15 @@ class TimeZone implements TimeZoneInterface
      * @param string $tz
      * @return int
      * @throws InvalidTimezoneException
+     * the offset from GMT can vary based on the date because of daylight savings time.  If no second parameter is
+     * supplied, the offset will be from the current date (e.g. the time function, which gets the current timestamp
+     * on the host).  If you supply a timestamp, you get the offset on that day.
      */
-    public static function getRawOffset(string $tz): int
+    public static function getRawOffset(string $tz, int $timeStamp = null): int
     {
         if (!TimeZone::exists($tz)) {
             throw new InvalidTimezoneException($tz);
         }
-        return Timezones::getRawOffset($tz);
+        return Timezones::getRawOffset($tz, $timeStamp);
     }
 }

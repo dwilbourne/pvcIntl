@@ -42,4 +42,20 @@ class TimezoneTest extends TestCase
         self::expectException(InvalidTimezoneException::class);
         TimeZone::getRawOffset('foobar');
     }
+
+    /**
+     * testGetRawOffsetWhereOffsetVaries
+     * @throws InvalidTimezoneException
+     * @covers \pvc\intl\TimeZone::getRawOffset
+     */
+    public function testGetRawOffsetWhereOffsetVaries(): void
+    {
+        $expectedResult = 3600;
+        $actualResult = Timezone::getRawOffset('Europe/Madrid', strtotime('March 31, 2019'));
+        self::assertEquals($expectedResult, $actualResult);
+
+        $expectedResult = 7200;
+        $actualResult = Timezone::getRawOffset('Europe/Madrid', strtotime('April 1, 2019'));
+        self::assertEquals($expectedResult, $actualResult);
+    }
 }
