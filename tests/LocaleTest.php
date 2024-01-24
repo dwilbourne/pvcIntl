@@ -13,6 +13,13 @@ use pvc\intl\Locale;
 
 class LocaleTest extends TestCase
 {
+    protected Locale $locale;
+
+    public function setUp(): void
+    {
+        $this->locale = new Locale();
+    }
+
     /**
      * testLocaleExistsSuccess
      * @covers \pvc\intl\Locale::exists
@@ -26,9 +33,9 @@ class LocaleTest extends TestCase
      * testLocaleExistsFailure
      * @covers \pvc\intl\Locale::exists
      */
-    public function testLocaleExistsFailureOnLanguageCode(): void
+    public function testLocaleExistsCanonicalizesBeforeTesting(): void
     {
-        self::assertFalse(Locale::exists('EN_US'));
+        self::assertTrue(Locale::exists('EN_US'));
     }
 
     /**
@@ -41,22 +48,35 @@ class LocaleTest extends TestCase
     }
 
     /**
-     * testConstructSuccess
-     * @covers \pvc\intl\Locale::__construct
+     * testContrustThrowsExceptionWithBadLocaleString
+     * @covers \pvc\intl\Locale::setLocaleString
      */
-    public function testConstructSuccess(): void
+    public function testSetterThrowsExceptionWithBadLocaleString(): void
     {
-        self::assertInstanceOf(Locale::class, new Locale('en_US'));
+        self::expectException(InvalidLocaleException::class);
+        $this->locale->setLocaleString('foobar');
     }
 
     /**
-     * testContrustThrowsExceptionWithBadLocaleString
-     * @covers \pvc\intl\Locale::__construct
+     * testSetGetLocaleString
+     * @throws InvalidLocaleException
+     * @covers \pvc\intl\Locale::setLocaleString
+     * @covers \pvc\intl\Locale::getLocaleString
      */
-    public function testContrustThrowsExceptionWithBadLocaleString(): void
+    public function testSetGetLocaleString(): void
     {
-        self::expectException(InvalidLocaleException::class);
-        $locale = new Locale('foobar');
+        $testString = 'fr_CA';
+        $this->locale->setLocaleString($testString);
+        self::assertEquals($testString, $this->locale->getLocaleString());
+    }
+
+    /**
+     * testGetterReturnsDefaultLocaleIfNotExplicitlyInitialized
+     * @covers \pvc\intl\Locale::getLocaleString
+     */
+    public function testGetterReturnsDefaultLocaleIfNotExplicitlyInitialized(): void
+    {
+        self::assertEquals(\Locale::getDefault(), $this->locale->getLocaleString());
     }
 
     /**
@@ -67,7 +87,7 @@ class LocaleTest extends TestCase
     public function testToString(): void
     {
         $testLocale = 'fr_CA';
-        $locale = new Locale($testLocale);
-        self::assertEquals($testLocale, (string)$locale);
+        $this->locale->setLocaleString($testLocale);
+        self::assertEquals($testLocale, (string)$this->locale);
     }
 }

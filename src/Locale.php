@@ -14,8 +14,6 @@ use Symfony\Component\Intl\Locales;
 
 /**
  * Class Locale.
- * The format uses underscores, not hyphens (e.g. fr_FR, not fr-FR).  The language code cannot be capitalized, the
- * country code (second part of the string) must be capitalized.
  */
 class Locale implements LocaleInterface
 {
@@ -25,25 +23,31 @@ class Locale implements LocaleInterface
     protected string $localeString;
 
     /**
-     * @param string $localeString
-     * @throws InvalidLocaleException
-     */
-    public function __construct(string $localeString)
-    {
-        if (!self::exists($localeString)) {
-            throw new InvalidLocaleException($localeString);
-        }
-        $this->localeString = $localeString;
-    }
-
-    /**
      * exists
      * @param string $locale
      * @return bool
      */
     public static function exists(string $locale): bool
     {
-        return Locales::exists($locale);
+        return Locales::exists(\Locale::canonicalize($locale));
+    }
+
+    public function setLocaleString(string $localeString): void
+    {
+        /**
+         * canonicalize the string first, e.g. convert hyphens to underscores, ensure the country code is lower case
+         * and the language code is upper case (and fix any other segments of the string as well).
+         */
+        $localeString = \Locale::canonicalize($localeString);
+        if (!self::exists($localeString)) {
+            throw new InvalidLocaleException($localeString);
+        }
+        $this->localeString = $localeString;
+    }
+
+    public function getLocaleString(): string
+    {
+        return $this->localeString ?? \Locale::getDefault();
     }
 
     /**
@@ -52,6 +56,6 @@ class Locale implements LocaleInterface
      */
     public function __toString(): string
     {
-        return $this->localeString;
+        return $this->getLocaleString();
     }
 }

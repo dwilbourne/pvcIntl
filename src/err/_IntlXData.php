@@ -25,6 +25,8 @@ class _IntlXData extends XDataAbstract
             InvalidCountryCodeException::class => 1002,
             InvalidLanguageCodeException::class => 1003,
             InvalidCharsetException::class => 1004,
+            InvalidDateTimeTypeException::class => 1005,
+            InvalidCalendarTypeException::class => 1006,
         ];
     }
 
@@ -36,6 +38,8 @@ class _IntlXData extends XDataAbstract
             InvalidCountryCodeException::class => 'Invalid country code: ${badCountryCode}',
             InvalidLanguageCodeException::class => 'Invalid language code: ${badLanguageCode}',
             InvalidCharsetException::class => 'Invalid charset: ${badCharset}',
+            InvalidDateTimeTypeException::class => 'Invalid Date Type / Time Type - see the IntlDateFormatter documentation',
+            InvalidCalendarTypeException::class => 'Invalid calendar type - see the IntlDateFormatter documentation',
         ];
     }
 }
