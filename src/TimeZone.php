@@ -19,11 +19,20 @@ class TimeZone implements TimeZoneInterface
 {
     protected string $tzString;
 
+    /**
+     * getTimeZoneString
+     * @return string
+     */
     public function getTimeZoneString(): string
     {
         return $this->tzString ?? date_default_timezone_get();
     }
 
+    /**
+     * setTimeZoneString
+     * @param string $tzString
+     * @throws InvalidTimezoneException
+     */
     public function setTimeZoneString(string $tzString): void
     {
         if (!$this->exists($tzString)) {
@@ -42,6 +51,10 @@ class TimeZone implements TimeZoneInterface
         return Timezones::exists($tz);
     }
 
+    /**
+     * __toString
+     * @return string
+     */
     public function __toString(): string
     {
         return $this->getTimeZoneString();

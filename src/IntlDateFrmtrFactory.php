@@ -52,8 +52,7 @@ class IntlDateFrmtrFactory
         int $timeFormat,
         TimeZone $tz,
         int $calendar = null
-    ):
-    IntlDateFormatter {
+    ): IntlDateFormatter {
         if (!in_array($dateFormat, self::$validDateTimeTypes)) {
             throw new InvalidDateTimeTypeException();
         }
