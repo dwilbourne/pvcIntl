@@ -17,6 +17,9 @@ use pvc\intl\err\InvalidDateTimeTypeException;
  */
 class IntlDateFrmtrFactory
 {
+    /**
+     * @var int[]
+     */
     protected static array $validDateTimeTypes = [
         IntlDateFormatter::NONE,
         IntlDateFormatter::FULL,
@@ -26,7 +29,7 @@ class IntlDateFrmtrFactory
     ];
 
     /**
-     * @var array
+     * @var int[]
      * there are other calendars that the international date formatter will use, but they must be specified in the
      * locale.  See the documentation for the IntlDateFormatter class.
      */

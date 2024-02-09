@@ -62,7 +62,7 @@ class TimeZone implements TimeZoneInterface
 
     /**
      * getRawOffset
-     * @param string $tz
+     * @param int|null $timeStamp
      * @return int
      * @throws InvalidTimezoneException
      * the offset from GMT can vary based on the date because of daylight savings time.  If no parameter is
