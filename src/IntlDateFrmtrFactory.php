@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace pvc\intl;
 
+use DateTimeZone;
 use IntlDateFormatter;
 use pvc\intl\err\InvalidCalendarTypeException;
 use pvc\intl\err\InvalidDateTimeTypeException;
@@ -43,7 +44,7 @@ class IntlDateFrmtrFactory
      * @param Locale $locale
      * @param int $dateFormat
      * @param int $timeFormat
-     * @param TimeZone $tz
+     * @param DateTimeZone $tz
      * @param int $calendar |null
      * @return IntlDateFormatter
      * @throws InvalidCalendarTypeException
@@ -53,7 +54,7 @@ class IntlDateFrmtrFactory
         Locale $locale,
         int $dateFormat,
         int $timeFormat,
-        TimeZone $tz,
+        DateTimeZone $tz,
         int $calendar = null
     ): IntlDateFormatter {
         if (!in_array($dateFormat, self::$validDateTimeTypes)) {
@@ -68,6 +69,6 @@ class IntlDateFrmtrFactory
         if (!in_array($calendar, self::$validCalendarTypes)) {
             throw new InvalidCalendarTypeException();
         }
-        return new IntlDateFormatter((string)$locale, $dateFormat, $timeFormat, (string)$tz, $calendar);
+        return new IntlDateFormatter((string)$locale, $dateFormat, $timeFormat, $tz, $calendar);
     }
 }

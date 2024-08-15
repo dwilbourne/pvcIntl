@@ -7,13 +7,13 @@ declare (strict_types=1);
 
 namespace pvcTests\intl;
 
+use DateTimeZone;
 use IntlDateFormatter;
 use PHPUnit\Framework\TestCase;
 use pvc\intl\err\InvalidCalendarTypeException;
 use pvc\intl\err\InvalidDateTimeTypeException;
 use pvc\intl\IntlDateFrmtrFactory;
 use pvc\intl\Locale;
-use pvc\intl\TimeZone;
 
 class IntlDateFrmtrFactoryTest extends TestCase
 {
@@ -23,7 +23,9 @@ class IntlDateFrmtrFactoryTest extends TestCase
 
     protected int $badDateTimeType = 9;
 
-    protected TimeZone $tz;
+    protected DateTimeZone $tz;
+
+    protected string $goodTimeZoneId = 'America/New_York';
 
     protected int $goodCalendarType = IntlDateFormatter::TRADITIONAL;
 
@@ -32,7 +34,7 @@ class IntlDateFrmtrFactoryTest extends TestCase
     public function setUp(): void
     {
         $this->locale = new Locale();
-        $this->tz = new TimeZone();
+        $this->tz = new DateTimeZone($this->goodTimeZoneId);
     }
 
     /**
