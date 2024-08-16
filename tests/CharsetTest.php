@@ -25,18 +25,19 @@ class CharsetTest extends TestCase
     /**
      * testIsValid
      * @covers \pvc\intl\Charset::isValid
+     * @dataProvider dataProvider
      */
-    public function testIsValid(): void
+    public function testIsValid(string $input, bool $expectedResult, string $comment): void
     {
         self::assertTrue(Charset::isValid('UTF-8'));
     }
 
-    /**
-     * testIsValid
-     * @covers \pvc\intl\Charset::isValid
-     */
-    public function testIsNotValid(): void
+    public function dataProvider(): array
     {
-        self::assertFalse(Charset::isValid('foo'));
+        return [
+            ['utf-8', true, 'failed to validate utf-8'],
+            ['UTF-8', true, 'failed to validate UTF-8'],
+            ['foo', false, 'wrongly validated foo'],
+        ];
     }
 }

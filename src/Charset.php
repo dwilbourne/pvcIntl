@@ -24,6 +24,6 @@ class Charset implements CharsetInterface
      */
     public static function isValid(string $charset): bool
     {
-        return in_array($charset, self::getPhpCharsets());
+        return in_array(strtolower($charset), array_map('strtolower', self::getPhpCharsets()));
     }
 }
