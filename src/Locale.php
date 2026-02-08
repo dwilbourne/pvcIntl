@@ -50,6 +50,11 @@ class Locale implements LocaleInterface
         return $this->localeString ?? \Locale::getDefault();
     }
 
+    public function getDefaultLocaleString(): string
+    {
+        return \Locale::getDefault();
+    }
+
     /**
      * __toString
      * @return string
