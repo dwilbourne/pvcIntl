@@ -17,8 +17,9 @@ use Symfony\Component\Intl\Locales;
  */
 class Locale implements LocaleInterface
 {
-    public function __construct(protected string $localeString)
+    public function __construct(protected ?string $localeString = null)
     {
+        $this->setLocaleString($localeString ?: self::getDefaultLocaleString());
     }
 
     /**
@@ -46,7 +47,7 @@ class Locale implements LocaleInterface
 
     public function getLocaleString(): string
     {
-        return $this->localeString;
+        return $this->localeString ?? self::getDefaultLocaleString();
     }
 
     public function getDefaultLocaleString(): string
