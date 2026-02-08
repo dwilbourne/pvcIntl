@@ -17,10 +17,9 @@ use Symfony\Component\Intl\Locales;
  */
 class Locale implements LocaleInterface
 {
-    /**
-     * @var string
-     */
-    protected string $localeString;
+    public function __construct(protected string $localeString)
+    {
+    }
 
     /**
      * exists
@@ -29,7 +28,7 @@ class Locale implements LocaleInterface
      */
     public static function exists(string $locale): bool
     {
-        return Locales::exists(\Locale::canonicalize($locale));
+        return Locales::exists(\Locale::canonicalize($locale) ?? '');
     }
 
     public function setLocaleString(string $localeString): void
@@ -38,7 +37,7 @@ class Locale implements LocaleInterface
          * canonicalize the string first, e.g. convert hyphens to underscores, ensure the country code is lower case
          * and the language code is upper case (and fix any other segments of the string as well).
          */
-        $localeString = \Locale::canonicalize($localeString);
+        $localeString = \Locale::canonicalize($localeString) ?? '';
         if (!self::exists($localeString)) {
             throw new InvalidLocaleException($localeString);
         }
@@ -47,7 +46,7 @@ class Locale implements LocaleInterface
 
     public function getLocaleString(): string
     {
-        return $this->localeString ?? \Locale::getDefault();
+        return $this->localeString;
     }
 
     public function getDefaultLocaleString(): string
